@@ -1,0 +1,24 @@
+html, body {
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+}
+
+.calendar-screen {
+    height: 100vh;
+    width: 100vw;
+}
+
+.calendar-container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.calendar {
+    margin-top: 5px;
+    height: 85vh;
+    width: 80vw;
+}

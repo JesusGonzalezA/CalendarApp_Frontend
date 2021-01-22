@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import moment from 'moment'
 
 import Modal from 'react-modal';
@@ -25,16 +25,24 @@ const initialState = {
 
 export const CalendarModal = () => {
 
+    const dispatch = useDispatch();
+    const { activeEvent } = useSelector(state => state.events)
+    const { modalOpen } = useSelector(state => state.ui);
+    
     const [startDate, setStartDate] = useState( now.toDate() );
     const [endDate, setEndDate] = useState( tomorrow.toDate() );
     const [isTitleValid, setIsTitleValid] = useState(true);
-
-    const dispatch = useDispatch();
-    const { modalOpen } = useSelector(state => state.ui);
-
     const [formValues, setFormValues] = useState(initialState);
 
     const { notes, title, start, end } = formValues;
+    
+    useEffect(() => {
+        
+        if ( activeEvent ){
+            setFormValues(activeEvent);
+        }
+
+    }, [activeEvent, setFormValues])
 
     const handleInputChange = ( e ) => {
         setFormValues({
@@ -46,6 +54,7 @@ export const CalendarModal = () => {
     const closeModal = () => {
         dispatch( uiCloseModal() );
         dispatch( eventsSetActive( null ) );
+        setFormValues(initialState);
     }
 
     const handleStartDateChange = ( e ) => {
@@ -79,7 +88,6 @@ export const CalendarModal = () => {
             }))
 
             setIsTitleValid(true);
-            setFormValues(initialState);
             closeModal();
         }
     }

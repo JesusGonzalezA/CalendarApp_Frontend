@@ -8,13 +8,20 @@ import Swal from 'sweetalert2'
 import { CalendarModalStyles } from '../../helpers/CalendarModalStyles';
 import { useDispatch, useSelector } from 'react-redux';
 import { uiCloseModal } from '../../actions/ui';
-import { eventsSetActive } from '../../actions/events';
+import { eventsAddNew, eventsSetActive } from '../../actions/events';
  
 const customStyles = CalendarModalStyles;
 Modal.setAppElement('#root');
 
 const now = moment().minutes(0).seconds(0).add(1,'hours');
 const tomorrow = now.clone().add(1, 'days');
+
+const initialState = {
+    title: '',
+    notes: '',
+    start: now.toDate(),
+    end: tomorrow.toDate()
+}
 
 export const CalendarModal = () => {
 
@@ -25,12 +32,7 @@ export const CalendarModal = () => {
     const dispatch = useDispatch();
     const { modalOpen } = useSelector(state => state.ui);
 
-    const [formValues, setFormValues] = useState({
-        title: '',
-        notes: '',
-        start: now.toDate(),
-        end: tomorrow.toDate()
-    });
+    const [formValues, setFormValues] = useState(initialState);
 
     const { notes, title, start, end } = formValues;
 
@@ -66,7 +68,18 @@ export const CalendarModal = () => {
         e.preventDefault();
 
         if ( validateForm() ){
+
+            dispatch( eventsAddNew( {
+                ...formValues, 
+                id: 1,
+                user: {
+                    _id: '123',
+                    name: 'Jesus'
+                }
+            }))
+
             setIsTitleValid(true);
+            setFormValues(initialState);
             closeModal();
         }
     }

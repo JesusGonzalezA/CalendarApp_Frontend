@@ -8,7 +8,7 @@ import Swal from 'sweetalert2'
 import { CalendarModalStyles } from '../../helpers/CalendarModalStyles';
 import { useDispatch, useSelector } from 'react-redux';
 import { uiCloseModal } from '../../actions/ui';
-import { eventsAddNew, eventsSetActive } from '../../actions/events';
+import { eventsAddNew, eventsClearActive } from '../../actions/events';
  
 const customStyles = CalendarModalStyles;
 Modal.setAppElement('#root');
@@ -35,7 +35,7 @@ export const CalendarModal = () => {
     const [formValues, setFormValues] = useState(initialState);
 
     const { notes, title, start, end } = formValues;
-    
+
     useEffect(() => {
         
         if ( activeEvent ){
@@ -53,7 +53,7 @@ export const CalendarModal = () => {
 
     const closeModal = () => {
         dispatch( uiCloseModal() );
-        dispatch( eventsSetActive( null ) );
+        dispatch( eventsClearActive() );
         setFormValues(initialState);
     }
 

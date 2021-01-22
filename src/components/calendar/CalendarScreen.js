@@ -11,6 +11,7 @@ import '../../styles.css'
 import { CalendarModal } from './CalendarModal'
 import { useDispatch } from 'react-redux'
 import { uiOpenModal } from '../../actions/ui'
+import { eventsSetActive } from '../../actions/events'
 //**************************************************************************
 
 const localizer = momentLocalizer(moment);
@@ -37,6 +38,7 @@ export const CalendarScreen = () => {
     }
 
     const onSelectEvent = (e) => {
+        dispatch( eventsSetActive(e) )
     }
 
     const onViewChange = (e) => {

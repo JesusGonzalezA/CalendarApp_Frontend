@@ -8,6 +8,7 @@ import Swal from 'sweetalert2'
 import { CalendarModalStyles } from '../../helpers/CalendarModalStyles';
 import { useDispatch, useSelector } from 'react-redux';
 import { uiCloseModal } from '../../actions/ui';
+import { eventsSetActive } from '../../actions/events';
  
 const customStyles = CalendarModalStyles;
 Modal.setAppElement('#root');
@@ -42,6 +43,7 @@ export const CalendarModal = () => {
 
     const closeModal = () => {
         dispatch( uiCloseModal() );
+        dispatch( eventsSetActive( null ) );
     }
 
     const handleStartDateChange = ( e ) => {

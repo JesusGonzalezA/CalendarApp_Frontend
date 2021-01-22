@@ -76,3 +76,12 @@ html, body {
     border: 0px solid gray !important;
 
 }
+
+/* FABS */
+.fab {
+    border-radius: 100%;
+    bottom: 25px;
+    padding: 25px;
+    position: fixed;
+    right: 15px;
+}

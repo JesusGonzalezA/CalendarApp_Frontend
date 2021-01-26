@@ -11,7 +11,7 @@ import '../../styles.css'
 import { CalendarModal } from './CalendarModal'
 import { useDispatch, useSelector } from 'react-redux'
 import { uiOpenModal } from '../../actions/ui'
-import { eventsSetActive } from '../../actions/events'
+import { eventsClearActive, eventsSetActive } from '../../actions/events'
 import { AddNewFab } from '../ui/AddNewFab'
 import { DeleteEventFab } from '../ui/DeleteEventFab'
 //**************************************************************************
@@ -32,6 +32,10 @@ export const CalendarScreen = () => {
 
     const onSelectEvent = (e) => {
         dispatch( eventsSetActive(e) );
+    }
+
+    const onSelectSlot = () => {
+        dispatch( eventsClearActive() )
     }
 
     const onViewChange = (e) => {
@@ -66,6 +70,8 @@ export const CalendarScreen = () => {
                     eventPropGetter= { eventStyleGetter }
                     onDoubleClickEvent={ onDoubleClick }
                     onSelectEvent={ onSelectEvent }
+                    onSelectSlot={ onSelectSlot }
+                    selectable={ true }
                     onView={ onViewChange }
                     components={{
                         event: CalendarEvent

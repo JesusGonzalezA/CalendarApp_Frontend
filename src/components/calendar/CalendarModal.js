@@ -38,9 +38,9 @@ export const CalendarModal = () => {
 
     useEffect(() => {
         
-        if ( activeEvent ){
-            setFormValues(activeEvent);
-        }
+        const formState = ( activeEvent )? activeEvent : initialState;
+
+        setFormValues(formState);
 
     }, [activeEvent, setFormValues])
 
@@ -80,7 +80,7 @@ export const CalendarModal = () => {
 
             dispatch( eventsAddNew( {
                 ...formValues, 
-                id: 1,
+                id: new Date().getTime(),
                 user: {
                     _id: '123',
                     name: 'Jesus'

@@ -37,7 +37,7 @@ export const CalendarScreen = () => {
         localStorage.setItem('lastView', e);
     }
 
-    const eventStyleGetter = ( event, start, end, isSelected ) => {
+    const eventStyleGetter = () => {
         
         const style = {
             backgroundColor: '#367CF7',

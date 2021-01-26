@@ -3,6 +3,7 @@ import { types } from "../types/types";
 
 const initialState = {
     events: [{
+        id: new Date().getTime(),
         title: 'Hacer ejercicio',
         user: {
             _id: '123',

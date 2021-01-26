@@ -8,7 +8,7 @@ import Swal from 'sweetalert2'
 import { CalendarModalStyles } from '../../helpers/CalendarModalStyles';
 import { useDispatch, useSelector } from 'react-redux';
 import { uiCloseModal } from '../../actions/ui';
-import { eventsAddNew, eventsClearActive } from '../../actions/events';
+import { eventsAddNew, eventsClearActive, eventsUpdate } from '../../actions/events';
  
 const customStyles = CalendarModalStyles;
 Modal.setAppElement('#root');
@@ -29,8 +29,6 @@ export const CalendarModal = () => {
     const { activeEvent } = useSelector(state => state.events)
     const { modalOpen } = useSelector(state => state.ui);
     
-    const [startDate, setStartDate] = useState( now.toDate() );
-    const [endDate, setEndDate] = useState( tomorrow.toDate() );
     const [isTitleValid, setIsTitleValid] = useState(true);
     const [formValues, setFormValues] = useState(initialState);
 
@@ -58,7 +56,6 @@ export const CalendarModal = () => {
     }
 
     const handleStartDateChange = ( e ) => {
-        setStartDate(e)
         setFormValues({
             ...formValues,
             start: e
@@ -66,7 +63,6 @@ export const CalendarModal = () => {
     }
 
     const handleEndDateChange = ( e ) => {
-        setEndDate(e)
         setFormValues({
             ...formValues,
             end: e
@@ -78,14 +74,19 @@ export const CalendarModal = () => {
 
         if ( validateForm() ){
 
-            dispatch( eventsAddNew( {
-                ...formValues, 
-                id: new Date().getTime(),
-                user: {
-                    _id: '123',
-                    name: 'Jesus'
-                }
-            }))
+            if ( activeEvent ){
+                dispatch( eventsUpdate(formValues))
+            }
+            else {
+                dispatch( eventsAddNew({
+                    ...formValues, 
+                    id: new Date().getTime(),
+                    user: {
+                        _id: '123',
+                        name: 'Jesus'
+                    }
+                }))
+        }
 
             setIsTitleValid(true);
             closeModal();
@@ -129,7 +130,7 @@ export const CalendarModal = () => {
                         className="form-control"
                         onChange={ handleStartDateChange }
                         minDate={ now.toDate() }
-                        value={ startDate }
+                        value={ start }
                     />
                 </div>
 
@@ -138,8 +139,8 @@ export const CalendarModal = () => {
                     <DateTimePicker
                         className="form-control"
                         onChange={ handleEndDateChange }
-                        minDate={ startDate }
-                        value={ endDate }
+                        minDate={ start }
+                        value={ end }
                     />
                 </div>
 

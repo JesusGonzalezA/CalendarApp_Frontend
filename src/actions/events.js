@@ -18,3 +18,7 @@ export const eventsUpdate = ( event ) => ({
     type: types.eventsUpdate,
     payload: event
 })
+
+export const eventsDelete = () => ({
+    type: types.eventsDelete
+})

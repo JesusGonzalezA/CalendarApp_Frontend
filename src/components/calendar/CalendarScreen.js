@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { uiOpenModal } from '../../actions/ui'
 import { eventsSetActive } from '../../actions/events'
 import { AddNewFab } from '../ui/AddNewFab'
+import { DeleteEventFab } from '../ui/DeleteEventFab'
 //**************************************************************************
 
 const localizer = momentLocalizer(moment);
@@ -20,7 +21,8 @@ const localizer = momentLocalizer(moment);
 export const CalendarScreen = () => {
 
     const dispatch = useDispatch();
-    const { events } = useSelector(state => state.events)
+    const { events, activeEvent } = useSelector(state => state.events);
+    const { modalOpen } = useSelector(state => state.ui);
 
     const [lastView, setLastView] = useState( localStorage.getItem('lastView') || 'month' );
 
@@ -71,7 +73,8 @@ export const CalendarScreen = () => {
                 />
 
                 <CalendarModal />
-
+                
+                { activeEvent && !modalOpen && <DeleteEventFab /> }
                 <AddNewFab />
             </div>
         </div>

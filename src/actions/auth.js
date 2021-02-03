@@ -1,5 +1,7 @@
-import { fetchWithoutToken } from "../helpers/fetch"
-import { types } from "../types/types";
+import Swal from 'sweetalert2';
+
+import { fetchWithoutToken } from '../helpers/fetch';
+import { types } from '../types/types';
 
 export const startLogin = ( email, password ) => {
     return async ( dispatch ) => {
@@ -7,6 +9,7 @@ export const startLogin = ( email, password ) => {
         const resp = await fetchWithoutToken( 'auth', { email, password }, 'POST' );
         const body = await resp.json();
         
+        console.log(body);
         
         if ( body.ok ) {
             const { token, uid, name } = body.data;
@@ -15,6 +18,8 @@ export const startLogin = ( email, password ) => {
             localStorage.setItem('token-init-date', new Date().getTime());
 
             dispatch( login( { uid, name } ) );
+        } else {
+            Swal.fire('Error', body.msg, 'error');
         }
         
     }

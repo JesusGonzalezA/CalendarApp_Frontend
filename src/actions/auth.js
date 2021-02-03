@@ -9,8 +9,6 @@ export const startLogin = ( email, password ) => {
         const resp = await fetchWithoutToken( 'auth', { email, password }, 'POST' );
         const body = await resp.json();
         
-        console.log(body);
-        
         if ( body.ok ) {
             const { token, uid, name } = body.data;
 
@@ -30,3 +28,28 @@ const login = ( user ) => ({
     type: types.authLogin,
     payload: user
 })
+
+//--------------------------------------------------------------------------
+
+export const startRegister = ( email, name, password ) => {
+    return async ( dispatch ) => {
+        
+        const resp = await fetchWithoutToken('auth/new', { email, name, password }, 'POST' );
+        const body = await resp.json();
+
+        console.log(body);
+        
+        
+        if ( body.ok ) {
+            const { token, uid, name } = body.data;
+
+            localStorage.setItem('token', token );
+            localStorage.setItem('token-init-date', new Date().getTime());
+
+            dispatch( login( { uid, name } ) );
+        } else {
+            Swal.fire('Error', [ body.errors.target.msg ], 'error');
+        }
+
+    }
+}

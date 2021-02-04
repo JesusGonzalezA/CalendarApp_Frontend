@@ -50,6 +50,11 @@ export const eventsReducer = ( state = initialState, action) => {
                 events: action.payload
             }
 
+        case types.eventsCleanLogout: 
+            return {
+                ...initialState
+            }
+
         default:
             return state;
     }

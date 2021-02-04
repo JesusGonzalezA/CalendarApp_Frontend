@@ -98,6 +98,37 @@ const eventsUpdate = ( event ) => ({
 
 //--------------------------------------------------------------------------
 
+export const eventsStartDelete = ( ) => {
+    return async (dispatch, getState) => {
+
+        const { id } = getState().events.activeEvent;
+
+        try {
+
+            const resp = await fetchWithToken( `events/${id}`, {} , 'DELETE' );
+            const body = await resp.json();
+
+            if ( body.ok ) {
+                                
+                dispatch( eventsDelete() );
+
+                Swal.fire('Completed', 'The event was deleted succesfully', 'success');
+            } else {
+                Swal.fire('Error', body.msg, 'error');
+            }
+
+        } catch (error) {
+            Swal.fire('Error', 'Something went bad', 'error');
+        }
+    }
+}
+
+const eventsDelete = () => ({
+    type: types.eventsDelete
+})
+
+//--------------------------------------------------------------------------
+
 export const eventsSetActive = ( event ) => ({
     type: types.eventsSetActive,
     payload: event
@@ -107,7 +138,7 @@ export const eventsClearActive = ( ) => ({
     type: types.eventsClearActive
 })
 
-
-export const eventsDelete = () => ({
-    type: types.eventsDelete
+export const eventsCleanLogout = () => ({
+    type: types.eventsCleanLogout
 })
+

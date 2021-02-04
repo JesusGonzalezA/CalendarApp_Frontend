@@ -54,7 +54,7 @@ export const CalendarScreen = () => {
         let color = 'white';
         let backgroundColor = ( event.user._id === uid )? '#367CF7' : '#173F5F';
 
-        if ( isSelected && event.user._id === uid)
+        if ( isSelected )
         {
             backgroundColor = '#F6D55C';
             color = 'black';
@@ -70,7 +70,7 @@ export const CalendarScreen = () => {
 
         return {style};
     }
-    
+
     return (
         <div className="calendar-screen">
             <Navbar className="navbar"/>

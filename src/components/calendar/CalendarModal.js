@@ -11,7 +11,7 @@ import { uiCloseModal } from '../../actions/ui';
 import { 
     eventsStartAddNew, 
     eventsClearActive, 
-    eventsUpdate } from '../../actions/events';
+    eventsStartUpdate } from '../../actions/events';
  
 const customStyles = CalendarModalStyles;
 Modal.setAppElement('#root');
@@ -78,7 +78,7 @@ export const CalendarModal = () => {
         if ( validateForm() ){
 
             if ( activeEvent ){
-                dispatch( eventsUpdate( formValues ) )
+                dispatch( eventsStartUpdate( formValues ) )
             }
             else {
                 dispatch( eventsStartAddNew( formValues ) )

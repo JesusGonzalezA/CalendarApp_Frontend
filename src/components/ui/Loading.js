@@ -3,11 +3,11 @@ import './loading.css'
 
 export const Loading = () => {
     return (
-        <div class="loading__container">
-            <h1 class="loading__title">
+        <div className="loading__container">
+            <h1 className="loading__title">
                 Loading...
             </h1>
-        <div class="loading__loader"></div>
+        <div className="loading__loader"></div>
     </div>
     )
 }

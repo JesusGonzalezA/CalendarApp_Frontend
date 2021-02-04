@@ -4,7 +4,7 @@ You can login, register and create, delete, update and list the events from the\
 calendar. You need an account to do all the operations. You can only delete and update your events. \
 On the other hand, you can see others' events. This is a very helpful tool for teams.
 
-:warning: **I may have deleted the connection. See the backend and create yours in that case: ** https://github.com/JesusGonzalezA/CalendarApp_Backend  \
+:warning: **I may have deleted the connection. See the backend and create yours in that case** https://github.com/JesusGonzalezA/CalendarApp_Backend  \
 
 
 https://jesusgonzaleza-calendar.herokuapp.com/login \

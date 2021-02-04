@@ -41,7 +41,7 @@ export const CalendarScreen = () => {
     }
 
     const onSelectSlot = () => {
-        dispatch( eventsClearActive() )
+        dispatch( eventsClearActive() );
     }
 
     const onViewChange = (e) => {
@@ -53,12 +53,6 @@ export const CalendarScreen = () => {
         
         let color = 'white';
         let backgroundColor = ( event.user._id === uid )? '#367CF7' : '#173F5F';
-
-        if ( isSelected )
-        {
-            backgroundColor = '#F6D55C';
-            color = 'black';
-        }
 
         const style = {
             backgroundColor,

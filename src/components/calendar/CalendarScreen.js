@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
@@ -11,7 +11,7 @@ import '../../styles.css'
 import { CalendarModal } from './CalendarModal'
 import { useDispatch, useSelector } from 'react-redux'
 import { uiOpenModal } from '../../actions/ui'
-import { eventsClearActive, eventsSetActive } from '../../actions/events'
+import { eventsClearActive, eventsSetActive, eventsStartLoading } from '../../actions/events'
 import { AddNewFab } from '../ui/AddNewFab'
 import { DeleteEventFab } from '../ui/DeleteEventFab'
 //**************************************************************************
@@ -23,8 +23,14 @@ export const CalendarScreen = () => {
     const dispatch = useDispatch();
     const { events, activeEvent } = useSelector(state => state.events);
     const { modalOpen } = useSelector(state => state.ui);
+    const { uid } = useSelector(state => state.auth);
 
     const [lastView, setLastView] = useState( localStorage.getItem('lastView') || 'month' );
+
+    useEffect(() => {
+        dispatch( eventsStartLoading() );
+        
+    }, [ dispatch ]);
 
     const onDoubleClick = (e) => {
         dispatch( uiOpenModal() );
@@ -43,18 +49,28 @@ export const CalendarScreen = () => {
         localStorage.setItem('lastView', e);
     }
 
-    const eventStyleGetter = () => {
+    const eventStyleGetter = ( event, start, end, isSelected ) => {
         
+        let color = 'white';
+        let backgroundColor = ( event.user._id === uid )? '#367CF7' : '#173F5F';
+
+        if ( isSelected && event.user._id === uid)
+        {
+            backgroundColor = '#F6D55C';
+            color = 'black';
+        }
+
         const style = {
-            backgroundColor: '#367CF7',
+            backgroundColor,
             borderRadius: '0px',
             opacity: 0.8,
             display: 'block',
-            color: 'white'
+            color
         }
 
         return {style};
     }
+    
     return (
         <div className="calendar-screen">
             <Navbar className="navbar"/>

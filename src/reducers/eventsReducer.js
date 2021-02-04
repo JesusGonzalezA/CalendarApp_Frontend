@@ -44,6 +44,12 @@ export const eventsReducer = ( state = initialState, action) => {
                 events: state.events.filter( event => event.id !== state.activeEvent.id )
             }
 
+        case types.eventsLoaded: 
+            return {
+                ...state,
+                events: action.payload
+            }
+
         default:
             return state;
     }

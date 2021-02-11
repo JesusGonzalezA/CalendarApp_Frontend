@@ -3,9 +3,10 @@ import thunk from 'redux-thunk';
 import '@testing-library/jest-dom';
 import Swal from 'sweetalert2';
 
-import { startLogin } from '../../actions/auth';
+import { startLogin, startRegister } from '../../actions/auth';
 import { user } from '../fixtures/user';
 import { types } from '../../types/types';
+import * as fetchModule from '../../helpers/fetch';
 
 //**************************************************************************
 
@@ -62,5 +63,46 @@ describe('Testing auth actions', () => {
         expect( actions ).toEqual([])
         expect( Swal.fire ).toHaveBeenCalledWith('Error', 'Incorrect password', 'error');
     })
+    
+    test('startRegister should show an error when the user exists ', async () => {
+        await store.dispatch( startRegister( user.email, 'Test', user.password ) );
+
+        const actions = store.getActions();
+
+        expect( actions ).toEqual([])
+        expect( Swal.fire ).toHaveBeenCalledWith('Error', '', 'error');
+    })
+
+    test('startRegister should login when a user is registered ', async () => {
+        
+        const token = '1234jksd';
+        const name = 'Test';
+        const uid = '1234356';
+
+        fetchModule.fetchWithoutToken = jest.fn( () => ({
+            json() {
+                return {
+                    ok: true,
+                    data: {
+                        token, uid, name
+                    }
+                }
+            }
+        }));
+    
+        await store.dispatch( startRegister( user.email, name, user.password ) );
+        const actions = store.getActions();
+
+        expect( actions[0] ).toEqual({
+            type: types.authLogin,
+            payload: {
+                uid,
+                name
+            }
+        });
+        expect( localStorage.setItem ).toHaveBeenCalledWith('token', token);
+        expect( localStorage.setItem ).toHaveBeenCalledWith('token-init-date', expect.any(Number));
+    })
+    
     
 })

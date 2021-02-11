@@ -1,11 +1,7 @@
 import { fetchWithoutToken, fetchWithToken } from "../../helpers/fetch";
+import { user } from '../fixtures/user'
 
 describe('Testing fetch helper', () => {
-
-    const user = {
-        email: 'test@test.test',
-        password: 'testtest'
-    };
 
     let token = '';
 

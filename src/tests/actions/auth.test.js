@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import '@testing-library/jest-dom';
 import Swal from 'sweetalert2';
 
-import { startLogin, startRegister } from '../../actions/auth';
+import { startChecking, startLogin, startRegister } from '../../actions/auth';
 import { user } from '../fixtures/user';
 import { types } from '../../types/types';
 import * as fetchModule from '../../helpers/fetch';
@@ -102,7 +102,47 @@ describe('Testing auth actions', () => {
         });
         expect( localStorage.setItem ).toHaveBeenCalledWith('token', token);
         expect( localStorage.setItem ).toHaveBeenCalledWith('token-init-date', expect.any(Number));
-    })
-    
+    });
+
+    test('startChecking should dispatch finish login state when there is no token', async () => {
+
+        await store.dispatch( startChecking() );
+        const actions = store.getActions();
+        
+        expect( actions[0] ).toEqual({
+            type: types.authCheckingFinish
+        })
+    });
+
+    test('startChecking should login when the token is correct', async () => {
+
+        const token = '1234jksd';
+        const name = 'Test';
+        const uid = '1234356';
+
+        fetchModule.fetchWithToken = jest.fn( () => ({
+            json() {
+                return {
+                    ok: true,
+                    data: {
+                        token, uid, name
+                    }
+                }
+            }
+        }));
+
+        await store.dispatch( startChecking() );
+        const actions = store.getActions();
+
+        expect( actions[0] ).toEqual({
+            type: types.authLogin,
+            payload: {
+                uid,
+                name
+            }
+        });
+        expect( localStorage.setItem ).toHaveBeenCalledWith('token', token);
+        expect( localStorage.setItem ).toHaveBeenCalledWith('token-init-date', expect.any(Number));
+    });   
     
 })

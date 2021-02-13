@@ -14,7 +14,8 @@ import { eventsStartDelete } from '../../../actions/events';
 
 jest.mock('../../../actions/events', () => ({
     eventsStartDelete: jest.fn()
-}))
+}));
+
 //**************************************************************************
 
 // Mock store

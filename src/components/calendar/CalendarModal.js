@@ -14,7 +14,9 @@ import {
     eventsStartUpdate } from '../../actions/events';
  
 const customStyles = CalendarModalStyles;
-Modal.setAppElement('#root');
+
+if ( process.env.NODE_ENV !== 'test' )
+    Modal.setAppElement('#root');
 
 const now = moment().minutes(0).seconds(0).add(1,'hours');
 const tomorrow = now.clone().add(1, 'days');

@@ -20,6 +20,7 @@ https://jesusgonzaleza.github.io/login
 :+1: JWT token \
 :+1: Components from the community (calendar) \
 :+1: Date, moment... \
-:+1: Custom alerts
+:+1: Custom alerts \
+:microscope: **Tests**: You can find them in src/tests. I used Jest, Testing library and Enzyme.
 
 

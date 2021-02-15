@@ -84,7 +84,7 @@ export const CalendarModal = () => {
             }
             else {
                 dispatch( eventsStartAddNew( formValues ) )
-        }
+            }
 
             setIsTitleValid(true);
             closeModal();
